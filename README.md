@@ -8,6 +8,10 @@ Requirements
 Python pip needs to be available. (You could use dockpack.base_python for that.)
 This role assumes the presence of a local registry for docker.
 
+```
+pip install requirements.txt
+```
+
 Role Variables
 --------------
 
@@ -18,6 +22,13 @@ Roles that go well with this role.
 
 dockpack.base_goss
 dockpack.base.docker
+
+Testing
+-------
+
+```
+molecule test
+```
 
 Example Playbook
 ----------------
