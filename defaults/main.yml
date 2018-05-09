@@ -1,0 +1,8 @@
+---
+# defaults file for base_grid
+selenium_image: selenium/hub:3.11.0-dysprosium
+ss_ff_container_image: selenium/node-firefox:3.11.0-dysprosium
+ss_cr_container_image: selenium/node-chrome:3.11.0-dysprosium
+
+ss_container_timezone: Europe/Amsterdam
+selenium_username: seluser

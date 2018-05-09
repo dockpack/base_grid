@@ -1,0 +1,39 @@
+---
+version: '2.2'
+# adapted from:
+# https://github.com/SeleniumHQ/docker-selenium/wiki/Getting-Started-with-Docker-Compose
+# template for {{ inventory_file|basename }}
+# docker-compose --force-recreate
+
+services:
+  firefox:
+    image: {{ ss_ff_container_image }}
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: {{ inventory_hostname }}
+      http_proxy: "{{ lookup('env','http_proxy') }}"
+      https_proxy: "{{ lookup('env','http_proxy') }}"
+      no_proxy: {{ lookup('env','no_proxy') }}
+
+
+  chrome:
+    image: {{ ss_cr_container_image }}
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: {{ inventory_hostname }}
+      http_proxy: "{{ lookup('env','http_proxy') }}"
+      https_proxy: "{{ lookup('env','http_proxy') }}"
+      no_proxy: {{ lookup('env','no_proxy') }}
+
+  hub:
+    image: {{ selenium_image }}
+    ports:
+      - "4444:4444"
+    expose:
+    - "4444"

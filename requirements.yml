@@ -1,0 +1,12 @@
+---
+
+- src: https://github.com/dockpack/base_docker.git
+  name: dockpack.base_docker
+  version: master
+
+- src: https://github.com/dockpack/base_epel.git
+  name: dockpack.base_epel
+  version: master
+
+- src: https://github.com/dockpack/base_goss.git
+  name: dockpack.base_goss

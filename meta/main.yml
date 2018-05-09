@@ -1,0 +1,26 @@
+galaxy_info:
+  author: Bas Meijer
+  description: Selenium Grid running with docker-compose
+  company: dockpack
+
+  license: MIT
+
+  min_ansible_version: 2.3
+
+  platforms:
+   - name: EL
+     versions:
+       - 7
+
+  galaxy_tags:
+    - web
+    - testing
+    - selenium
+    - development
+    - docker
+    - docker-compose
+    - firefox
+    - chrome
+
+dependencies:
+  - dockpack.base_goss

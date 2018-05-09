@@ -1,0 +1,133 @@
+---
+# provisioning containers with browsers and Selenium Hub
+
+- name: Copy goss tests template¬
+  template:
+    src: grid_goss.yml
+    dest: /root/grid_goss.yml
+
+- name: ensure selenium group exists
+  group:
+    name: selenium
+    state: present
+  tags:
+    - install
+
+- name: ensure user exists
+  user:
+    name: "{{ selenium_username }}"
+    group: selenium
+    state: present
+  tags:
+    - install
+
+- name: ensure directory exist
+  file:
+    path: "/home/{{ selenium_username }}/compose"
+    owner: "{{ selenium_username }}"
+    group: selenium
+    mode: 0755
+    state: directory
+
+- name: install python-pip rpm
+  yum:
+    name: python-pip
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: install selenium python module
+  pip:
+    name: selenium
+    state: present
+
+- name: install python libs
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker
+
+- name: deploy smoketest.py
+  template:
+    src: smoketest.py.j2
+    dest: "/home/{{ selenium_username }}/smoketest.py"
+    owner: "{{ selenium_username }}"
+    group: selenium
+    mode: 0755
+  tags:
+    - install
+
+#- name: set the DOCKER_REGISTRY_USER
+#  set_fact:
+#    DOCKER_REGISTRY_USER: "{{ lookup('ENV','DOCKER_REGISTRY_USER') }}"
+#  tags:
+#    - test
+#
+#- name: set the DOCKER_REGISTRY_TOKEN
+#  set_fact:
+#    DOCKER_REGISTRY_TOKEN: "{{ lookup('ENV','DOCKER_REGISTRY_TOKEN') }}"
+#  tags:
+#    - test
+#
+#- name: set the DOCKER_REGISTRY_URL
+#  set_fact:
+#    DOCKER_REGISTRY_URL: "{{ lookup('ENV','DOCKER_REGISTRY_URL') }}"
+#  tags:
+#    - test
+#
+#- name: login to the registry
+#  docker_login:
+#    registry_url: "{{ DOCKER_REGISTRY_URL }}"
+#    username: "{{ DOCKER_REGISTRY_USER }}"
+#    password: "{{ DOCKER_REGISTRY_TOKEN }}"
+#    reauthorize: yes
+#  changed_when: no
+#  tags:
+#    - test
+
+- name: deploy docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "/home/{{ selenium_username }}/compose/docker-compose.yml"
+    owner: "{{ selenium_username }}"
+    group: selenium
+    mode: 0755
+  tags:
+    - install
+
+- name: stop containers
+  docker_service:
+    project_src: "/home/{{ selenium_username }}/compose"
+    state: absent
+  ignore_errors: yes
+  tags:
+    - restart
+    - install
+
+- name: ensure docker is running
+  service:
+    name: docker
+    state: started
+
+- name: start selenium grid
+  docker_service:
+    project_src: "/home/{{ selenium_username }}/compose"
+    state: present
+    recreate: always
+  tags:
+    - restart
+    - install
+
+- name: wait for port
+  wait_for:
+    port: 4444
+    delay: 30
+
+# - name: run the smoke test
+#   command: "/home/{{ selenium_username }}/smoketest.py"
+#   register: page_test
+#   changed_when: no
+
+# - name: show the title
+#   debug:
+#     msg: "{{ page_test.stdout }}"

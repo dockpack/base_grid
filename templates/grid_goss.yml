@@ -1,0 +1,26 @@
+file:
+  /root/goss.yaml:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /usr/bin/goss:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    contains: []
+service:
+  docker:
+    enabled: false
+    running: true
+user:
+  seluser:
+    exists: true
+    home: /home/seluser
+    shell: /bin/bash
+group:
+  docker:
+    exists: true
