@@ -1,3 +1,6 @@
+[![Galaxy](https://img.shields.io/badge/galaxy-dockpack.base__grid-blue.svg?style=flat)](https://galaxy.ansible.com/dockpack/base_grid)[![Build Status](https://api.travis-ci.org/dockpack/base_grid.svg)](https://travis-ci.org/dockpack/base_grid)
+
+
 Base Grid
 =========
 
