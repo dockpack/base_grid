@@ -6,8 +6,10 @@ version: '2.2'
 # docker-compose --force-recreate
 
 services:
-  firefox:
-    image: {{ ss_ff_container_image }}
+
+{% for key, value in firefox.items() %}
+  firefox{{ key }}:
+    image: "{{ selenium_registry|default(None) }}selenium/node-firefox:{{ value }}"
     volumes:
       - /dev/shm:/dev/shm
     depends_on:
@@ -22,9 +24,11 @@ services:
       no_proxy: {{ lookup('ENV','no_proxy') }}
       TZ: "{{ ss_container_timezone }}"
     restart: always
+{% endfor %}
 
-  chrome:
-    image: {{ ss_cr_container_image }}
+{% for key, value in chrome.items() %}
+  chrome{{ key }}:
+    image: "{{ selenium_registry|default(None) }}selenium/node-chrome:{{ value }}"
     volumes:
       - /dev/shm:/dev/shm
       - /data/tls:/etc/ssl/certs
@@ -40,6 +44,7 @@ services:
       no_proxy: {{ lookup('ENV','no_proxy') }}
       TZ: "{{ ss_container_timezone }}"
     restart: always
+{% endfor %}
 
   hub:
     image: {{ ss_se_container_image }}

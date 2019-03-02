@@ -1,0 +1,87 @@
+---
+version: '2.2'
+# adapted from:
+# https://github.com/SeleniumHQ/docker-selenium/wiki/Getting-Started-with-Docker-Compose
+# template for ansible_inventory.yml
+# docker-compose --force-recreate
+
+services:
+
+  firefox65:
+    image: "selenium/node-firefox:3.141.59-iron"
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+      SCREEN_WIDTH: 1334
+      SCREEN_HEIGHT: 750
+      SCREEN_DEPTH: 24
+      http_proxy: ""
+      https_proxy: ""
+      no_proxy:
+      TZ: "Europe/Amsterdam"
+    restart: always
+  firefox60:
+    image: "selenium/node-firefox:3.12.0-cobalt"
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+      SCREEN_WIDTH: 1334
+      SCREEN_HEIGHT: 750
+      SCREEN_DEPTH: 24
+      http_proxy: ""
+      https_proxy: ""
+      no_proxy:
+      TZ: "Europe/Amsterdam"
+    restart: always
+
+  chrome72:
+    image: "selenium/node-chrome:3.141.59-iron"
+    volumes:
+      - /dev/shm:/dev/shm
+      - /data/tls:/etc/ssl/certs
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+      SCREEN_WIDTH: 1334
+      SCREEN_HEIGHT: 750
+      SCREEN_DEPTH: 24
+      http_proxy: ""
+      https_proxy: ""
+      no_proxy:
+      TZ: "Europe/Amsterdam"
+    restart: always
+  chrome63:
+    image: "selenium/node-chrome:3.8.1-erbium"
+    volumes:
+      - /dev/shm:/dev/shm
+      - /data/tls:/etc/ssl/certs
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+      SCREEN_WIDTH: 1334
+      SCREEN_HEIGHT: 750
+      SCREEN_DEPTH: 24
+      http_proxy: ""
+      https_proxy: ""
+      no_proxy:
+      TZ: "Europe/Amsterdam"
+    restart: always
+
+  hub:
+    image: selenium/hub:3.141.59-iron
+    ports:
+      - "4444:4444"
+    expose:
+      - 4444
+    environment:
+      JAVA_OPTS: "-Xmx512m"
+      TZ: "Europe/Amsterdam"
+    restart: always

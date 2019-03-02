@@ -9,11 +9,16 @@ selenium_release: 3.141.59-iron
 # Mozilla Firefox: 65.0.1
 # GeckoDriver: 0.24.0
 
-selenium_image: selenium/hub:{{ selenium_release }}
-firefox_image: selenium/node-firefox:{{ selenium_release }}
-chrome_image: selenium/node-chrome:{{ selenium_release }}
+chrome:
+  72: 3.141.59-iron  # 201902
+  63: 3.8.1-erbium   # 201801
+
+firefox:
+  65: 3.141.59-iron  # 201902
+  60: 3.12.0-cobalt  # 201806
 
 ss_container_timezone: Europe/Amsterdam
+
 selenium_username: vagrant
 selenium_hostname: "{{ inventory_hostname }}"
 
