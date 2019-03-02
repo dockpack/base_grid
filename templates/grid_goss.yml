@@ -29,9 +29,9 @@ mount:
   /dev/shm:
     exists: true
     opts:
-    - rw
-    - nosuid
-    - nodev
+      - rw
+      - nosuid
+      - nodev
     source: tmpfs
     filesystem: tmpfs
 interface:
