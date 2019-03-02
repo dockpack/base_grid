@@ -13,27 +13,41 @@ services:
     depends_on:
       - hub
     environment:
-      HUB_HOST: {{ inventory_hostname }}
-      http_proxy: "{{ lookup('env','http_proxy') }}"
-      https_proxy: "{{ lookup('env','http_proxy') }}"
-      no_proxy: {{ lookup('env','no_proxy') }}
-
+      HUB_HOST: hub
+      SCREEN_WIDTH: {{ screen_width }}
+      SCREEN_HEIGHT: {{ screen_height }}
+      SCREEN_DEPTH: {{ screen_depth | default('24') }}
+      http_proxy: "{{ lookup('ENV','http_proxy') }}"
+      https_proxy: "{{ lookup('ENV','http_proxy') }}"
+      no_proxy: {{ lookup('ENV','no_proxy') }}
+      TZ: "{{ ss_container_timezone }}"
+    restart: always
 
   chrome:
     image: {{ ss_cr_container_image }}
     volumes:
       - /dev/shm:/dev/shm
+      - /data/tls:/etc/ssl/certs
     depends_on:
       - hub
     environment:
-      HUB_HOST: {{ inventory_hostname }}
-      http_proxy: "{{ lookup('env','http_proxy') }}"
-      https_proxy: "{{ lookup('env','http_proxy') }}"
-      no_proxy: {{ lookup('env','no_proxy') }}
+      HUB_HOST: hub
+      SCREEN_WIDTH: {{ screen_width }}
+      SCREEN_HEIGHT: {{ screen_height }}
+      SCREEN_DEPTH: {{ screen_depth | default('24') }}
+      http_proxy: "{{ lookup('ENV','http_proxy') }}"
+      https_proxy: "{{ lookup('ENV','http_proxy') }}"
+      no_proxy: {{ lookup('ENV','no_proxy') }}
+      TZ: "{{ ss_container_timezone }}"
+    restart: always
 
   hub:
-    image: {{ selenium_image }}
+    image: {{ ss_se_container_image }}
     ports:
       - "4444:4444"
     expose:
-    - "4444"
+      - 4444
+    environment:
+      JAVA_OPTS: "-Xmx512m"
+      TZ: "{{ ss_container_timezone }}"
+    restart: always

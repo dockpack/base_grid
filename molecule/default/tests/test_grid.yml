@@ -5,8 +5,8 @@
     port: 4444
     delay: 5
 
-- name: run the smoke test
-  command: "/home/{{ selenium_username }}/smoketest.py"
+- name: running the test, take a smoke
+  script: smoketest.py
   register: page_test
   changed_when: no
 

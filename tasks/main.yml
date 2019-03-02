@@ -17,6 +17,7 @@
   user:
     name: "{{ selenium_username }}"
     group: selenium
+    groups: docker
     state: present
   tags:
     - install
@@ -42,10 +43,8 @@
 
 - name: install python libs
   pip:
-    name: "{{ item }}"
+    name: docker
     state: present
-  with_items:
-    - docker
 
 - name: deploy smoketest.py
   template:
@@ -85,6 +84,16 @@
 #  tags:
 #    - test
 
+- name: stop previous containers
+  docker_service:
+    project_src: "/home/{{ selenium_username }}/compose"
+    state: absent
+  ignore_errors: yes
+  changed_when: no
+  tags:
+    - restart
+    - install
+
 - name: deploy docker-compose.yml
   template:
     src: docker-compose.yml.j2
@@ -95,25 +104,19 @@
   tags:
     - install
 
-- name: stop containers
-  docker_service:
-    project_src: "/home/{{ selenium_username }}/compose"
-    state: absent
-  ignore_errors: yes
-  tags:
-    - restart
-    - install
-
+# Are we responsible for this daemomn?
 - name: ensure docker is running
   service:
     name: docker
     state: started
+    enabled: true
 
 - name: start selenium grid
   docker_service:
     project_src: "/home/{{ selenium_username }}/compose"
     state: present
     recreate: always
+  changed_when: false  # Not idem-potent
   tags:
     - restart
     - install
@@ -123,11 +126,6 @@
     port: 4444
     delay: 30
 
-# - name: run the smoke test
-#   command: "/home/{{ selenium_username }}/smoketest.py"
-#   register: page_test
-#   changed_when: no
-
-# - name: show the title
-#   debug:
-#     msg: "{{ page_test.stdout }}"
+- name: try the forwarded grid console
+  debug:
+    msg: "http://localhost:4444/grid/console"

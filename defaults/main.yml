@@ -1,8 +1,23 @@
 ---
 # defaults file for base_grid
-selenium_image: selenium/hub:3.11.0-dysprosium
-ss_ff_container_image: selenium/node-firefox:3.11.0-dysprosium
-ss_cr_container_image: selenium/node-chrome:3.11.0-dysprosium
+
+# https://github.com/SeleniumHQ/docker-selenium/releases
+selenium_release: 3.141.59-iron
+# Selenium: 3.141.59
+# Google Chrome: 72.0.3626.119
+# ChromeDriver: 2.46
+# Mozilla Firefox: 65.0.1
+# GeckoDriver: 0.24.0
+
+selenium_image: selenium/hub:{{ selenium_release }}
+firefox_image: selenium/node-firefox:{{ selenium_release }}
+chrome_image: selenium/node-chrome:{{ selenium_release }}
 
 ss_container_timezone: Europe/Amsterdam
-selenium_username: seluser
+selenium_username: vagrant
+selenium_hostname: "{{ inventory_hostname }}"
+
+# iPhone 6s
+screen_width: 1334
+screen_height: 750
+screen_depth: 24

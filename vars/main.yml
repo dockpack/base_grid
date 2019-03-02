@@ -1,0 +1,7 @@
+---
+
+# compose the variables for the docker-compose.yml.j2 template
+
+ss_se_container_image: "{{ selenium_registry|default(None) }}{{ selenium_image }}"
+ss_ff_container_image: "{{ selenium_registry|default(None) }}{{ firefox_image }}"
+ss_cr_container_image: "{{ selenium_registry|default(None) }}{{ chrome_image }}"

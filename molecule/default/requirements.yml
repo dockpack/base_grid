@@ -1,12 +1,13 @@
 ---
 
-- src: https://github.com/dockpack/base_docker.git
-  name: dockpack.base_docker
-  version: master
-
 - src: https://github.com/dockpack/base_epel.git
+  version: 0.3.0
   name: dockpack.base_epel
-  version: master
+
+- src: https://github.com/dockpack/base_docker.git
+  version: 0.5.8
+  name: dockpack.base_docker
 
 - src: https://github.com/dockpack/base_goss.git
+  version: master
   name: dockpack.base_goss

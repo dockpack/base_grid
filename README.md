@@ -8,17 +8,30 @@ A Selenium Grid running with docker-compose
 
 Requirements
 ------------
-Python pip needs to be available. (You could use dockpack.base_python for that.)
-This role assumes the presence of a local registry for docker.
+
+Python pip needs to be available to test multiple versions of Ansible with Tox and Molecule.
 
 ```
 pip install requirements.txt
 ```
 
+Docker
+------
+
+This role assumes the presence of a (local) registry with docker images mentioned in the vars and defaults.
+
+Vagrant
+-------
+
+I test this on a Mac with Vagrant and Virtualbox. Download my custom Centos 7:
+`vagrant init redesign/centos7`
+
+
 Role Variables
 --------------
 
 The defaults/main.yml file has variables that can be changed for different versions mostly.
+Refer to this page for browser versions supported: [https://github.com/SeleniumHQ/docker-selenium/releases](https://github.com/SeleniumHQ/docker-selenium/releases)
 
 Roles that go well with this role.
 ------------
@@ -28,9 +41,9 @@ dockpack.base.docker
 
 Testing
 -------
-
+Tox is used, so the full thing is tested with:
 ```
-molecule test
+tox
 ```
 
 Example Playbook
@@ -42,7 +55,7 @@ Including an example of how to use your role (for instance, with variables passe
 			hosts: testsystem
 			become: yes
 			roles:
-				- { role: dockepack.base_grid, tags: 'selenium'}
+				- { role: dockpack.base_grid, tags: 'selenium'}
 
 License
 -------

@@ -1,11 +1,12 @@
 ---
 - hosts: all
+  become: true
   roles:
     - role: dockpack.base_epel
     - role: dockpack.base_docker
     - role: dockpack.base_goss
     - role: base_grid
-
-  post_tasks:
-    - include:
-        tests/test_grid.yml
+#
+#  post_tasks:
+#    - include_tasks:
+#        tests/test_grid.yml
