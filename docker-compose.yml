@@ -44,7 +44,7 @@ services:
     image: "selenium/node-chrome:3.141.59-iron"
     volumes:
       - /dev/shm:/dev/shm
-      - /data/tls:/etc/ssl/certs
+      - ./certs:/etc/ssl/certs
     depends_on:
       - hub
     environment:
@@ -61,7 +61,7 @@ services:
     image: "selenium/node-chrome:3.8.1-erbium"
     volumes:
       - /dev/shm:/dev/shm
-      - /data/tls:/etc/ssl/certs
+      - ./certs:/etc/ssl/certs
     depends_on:
       - hub
     environment:
