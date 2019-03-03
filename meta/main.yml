@@ -18,7 +18,7 @@ galaxy_info:
     - selenium
     - development
     - docker
-    - docker-compose
+    - compose
     - firefox
     - chrome
 
