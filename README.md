@@ -5,7 +5,7 @@ Base Grid
 
 A *Selenium Grid* running with docker-compose and others.
 
-![GitHub Logo](/meta/grid.png)
+![Selenium Grid screenshot](https://github.com/bbaassssiiee/base_grid/blob/master/meta/grid.png)
 
 The goal is to help web developers make web sites work for the public at large.
 
