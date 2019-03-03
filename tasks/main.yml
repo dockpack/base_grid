@@ -34,6 +34,10 @@
   yum:
     name: python-pip
     state: present
+  register: yum_result
+  until: yum_result is success
+  retries: 10
+  delay: 2
   when: ansible_os_family == 'RedHat'
 
 - name: install selenium python module

@@ -3,7 +3,9 @@
 Base Grid
 =========
 
-A *Selenium Grid* running with docker-compose
+A *Selenium Grid* running with docker-compose and others.
+
+![GitHub Logo](/meta/grid.png)
 
 The goal is to help web developers make web sites work for the public at large.
 
