@@ -1,4 +1,6 @@
 .vagrant
+vagrant/*.zip
+vagrant/*.box
 .molecule
 scripts/*.jar
 # Byte-compiled / optimized / DLL files
