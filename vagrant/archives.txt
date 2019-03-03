@@ -1,0 +1,6 @@
+IE8.Win7.Vagrant.zip
+IE9.Win7.Vagrant.zip
+IE10.Win7.Vagrant.zip
+IE11.Win7.Vagrant.zip
+IE11.Win81.Vagrant.zip
+MSEdge.Win10.Vagrant.zip

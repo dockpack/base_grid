@@ -1,5 +1,5 @@
 #!/bin/sh
-for box in `cat 7-boxes.txt`
+for box in `cat boxes.txt`
 do
     curl -O $box
 done
