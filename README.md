@@ -53,6 +53,25 @@ in the vars and defaults.
 Vagrant
 -------
 
+You can use 7 versions of Internet Explorer by
+downloading Microsoft's VMs.
+
+This script does the download unzip and `vagrant box add` so you can use the `Vagrantfile`.
+
+```
+cd vagrant
+./windows_boxes.py
+```
+
+```
+vagrant up IE8Win7
+vagrant up IE9Win7
+vagrant up IE10Win7
+vagrant up IE11Win7
+vagrant up IE11Win81
+vagrant up MSEdgeWin10
+```
+
 I test this on a Mac with Vagrant and Virtualbox. Download my custom Centos 7,
 
 ```
