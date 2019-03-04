@@ -9,8 +9,9 @@ A *Selenium Grid* running with docker-compose and others.
 
 The goal is to help web developers make web sites work for the public at large.
 
-`dockpack.base_grid` is an Ansible role that deploys a Selenium grid, and it adds some extra's
-so you can use it in local mode to simulate the optimal variety of web browsers.
+`dockpack.base_grid` is an Ansible role that deploys a Selenium grid, and it adds
+some extra's so you can use it in local mode to simulate the optimal variety of
+web browsers.
 
 Quite common in corporate life, people have Virtual Desktops
 (Citrix or VMWare Horizon) for Windows, and  on-premise servers running Red Hat
@@ -26,6 +27,30 @@ that you can connect to from the Virtual Desktops and from an in-house buildserv
 Chrome. These older versions are not present on modern corporate IT systems,
 but some folks still use them. Microsoft publishes VM images with various older
 versions of Internet Explorer, using Vagrant we can add these to the local grid.
+
+Centos 7.5
+----------
+
+This Ansible role is tested with my redesign/centos7 Vagrant box. The Packer
+source is available at
+[https://github.com/bbaassssiiee/redesign](https://github.com/bbaassssiiee/redesign)
+
+```
+vagrant init redesign/centos7
+```
+
+Role Variables
+--------------
+
+The `defaults/main.yml` file has variables that can be changed for different
+versions mostly. Refer to this page for browser versions supported:
+[https://github.com/SeleniumHQ/docker-selenium/releases](https://github.com/SeleniumHQ/docker-selenium/releases)
+This role assumes the presence of Docker and a (local) registry like Sonatype
+Nexus holding images mentioned in the vars and defaults. This registry can be
+set as `selenium_registry` in your group_vars if needed.
+
+Testing
+-------
 
 You can imagine that maintaining such test infrastructure is and intricate job,
 therefore this repo has tools to simulate various things that we need to deal
@@ -44,19 +69,32 @@ and Molecule.
 pip install requirements.txt
 ```
 
-Docker
-------
+On-Premise Docker Registry
+--------------------------
 
-This role assumes the presence of a (local) registry with docker images mentioned
-in the vars and defaults.
+You can download these originals, tag them and push them to your local
+registry.
 
-Vagrant
--------
+```
+docker pull selenium/node-firefox:3.141.59-iron
+docker pull  selenium/node-firefox:3.12.0-cobalt
+docker pull  selenium/node-chrome:3.141.59-iron
+docker pull  selenium/node-chrome:3.8.1-erbium"
+docker pull  selenium/hub:3.141.59-iron
+```
 
-You can use 7 versions of Internet Explorer by
-downloading Microsoft's VMs.
+```
+docker images
+docker tag ...
+docker push ...
+```
 
-This script does the download unzip and `vagrant box add` so you can use the `Vagrantfile`.
+Vagrant testing
+---------------
+
+You can use 7 versions of Internet Explorer by downloading Microsoft's VMs.
+This script does the download unzip and `vagrant box add` so you can use the
+`Vagrantfile`.
 
 ```
 cd vagrant
@@ -72,17 +110,15 @@ vagrant up IE11Win81
 vagrant up MSEdgeWin10
 ```
 
-I test this on a Mac with Vagrant and Virtualbox. Download my custom Centos 7,
+Mac Tools
+---------
+
+I test this on a Mac with Vagrant and Virtualbox. I install all Mac tools
+included in th `Brewfile` with:
 
 ```
-vagrant init redesign/centos7
+brew bundle
 ```
-
-Role Variables
---------------
-
-The defaults/main.yml file has variables that can be changed for different
-versions mostly. Refer to this page for browser versions supported: [https://github.com/SeleniumHQ/docker-selenium/releases](https://github.com/SeleniumHQ/docker-selenium/releases)
 
 Roles that go well with this role
 ---------------------------------
@@ -90,7 +126,7 @@ Roles that go well with this role
 dockpack.base_goss
 dockpack.base.docker
 
-Testing
+Tox Testing
 -------
 
 Tox is used, so the full thing is tested with:
@@ -102,8 +138,8 @@ tox
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed
-in as parameters) is always nice for users too:
+Including an example of how to use your role (for instance, with variables
+passed in as parameters) is always nice for users too:
 
     - name: provision selenium
       hosts: testsystem

@@ -3,3 +3,4 @@ tox
 molecule
 docker
 python-vagrant
+pywinrm>=0.3.0
