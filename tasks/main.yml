@@ -89,7 +89,7 @@
 #    - test
 
 - name: stop previous containers
-  docker_service:
+  docker_compose:
     project_src: "/home/{{ selenium_username }}/compose"
     state: absent
   ignore_errors: yes
@@ -116,7 +116,7 @@
     enabled: true
 
 - name: start selenium grid
-  docker_service:
+  docker_compose:
     project_src: "/home/{{ selenium_username }}/compose"
     state: present
     recreate: always
